@@ -1,0 +1,22 @@
+# Modificar caminho do certificado
+version: '3.3'
+services:
+  nginx:
+    container_name: 'nginx'
+    image: nginx:latest
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./production.conf:/etc/nginx/conf.d/default.conf
+      - ./production-site:/usr/share/nginx/html
+      - ./dh-param/dhparam-2048.pem:/etc/ssl/certs/dhparam-2048.pem
+      - /docker-volumes/etc/letsencrypt/live/nextxtrading.com/fullchain.pem:/etc/letsencrypt/live/nextxtrading.com/fullchain.pem
+      - /docker-volumes/etc/letsencrypt/live/nextxtrading.com/privkey.pem:/etc/letsencrypt/live/nextxtrading.com/privkey.pem
+    networks:
+      - docker-network
+
+networks:
+  docker-network:
+    driver: bridge
+# Modificar caminho do certificado
