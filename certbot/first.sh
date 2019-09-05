@@ -9,5 +9,5 @@ certonly --webroot \
 --register-unsafely-without-email --agree-tos \
 --webroot-path=/data/letsencrypt \
 --staging \
--d nextxtrading.com -d www.nextxtrading.com
+-d backend.youxchange.io
 # Modificar os DNS para domínio desejado

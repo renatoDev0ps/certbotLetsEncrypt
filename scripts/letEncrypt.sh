@@ -24,6 +24,8 @@ usar certbot/third.sh
 cd /docker/letsencrypt-docker-nginx/src/letsencrypt
 docker-compose down
 
+# ir para ~/
+
 sudo mkdir -p DevOps/Nginx/production-site
 sudo mkdir -p DevOps/Nginx/dh-param
 sudo vim DevOps/Nginx/docker-compose.yml

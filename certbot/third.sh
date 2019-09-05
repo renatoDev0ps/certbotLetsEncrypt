@@ -6,7 +6,7 @@ sudo docker run -it --rm \
 -v "/docker-volumes/var/log/letsencrypt:/var/log/letsencrypt" \
 certbot/certbot \
 certonly --webroot \
---email nextxtradingssl@gmail.com --agree-tos --no-eff-email \
+--email youxchangegssl@gmail.com --agree-tos --no-eff-email \
 --webroot-path=/data/letsencrypt \
--d nextxtrading.com -d www.nextxtrading.com
+-d backend.youxchange.io
 # Modificar DNS para domínio desejado
