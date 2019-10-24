@@ -1,0 +1,29 @@
+# Modificar caminho do certificado
+version: '3.3'
+services:
+  nginx:
+    container_name: 'nginx'
+    image: nginx:latest
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./production.conf:/etc/nginx/conf.d/default.conf
+        #      - ./production-site:/usr/share/nginx/html
+      - ./nginx.conf:/etc/nginx/nginx.conf
+      - ./dh-param/dhparam-2048.pem:/etc/ssl/certs/dhparam-2048.pem
+      - /docker-volumes/etc/letsencrypt/live/api.bitextrading.com/fullchain.pem:/etc/letsencrypt/live/api.bitextrading.com/fullchain.pem
+      - /docker-volumes/etc/letsencrypt/live/api.bitextrading.com/privkey.pem:/etc/letsencrypt/live/api.bitextrading.com/privkey.pem
+    depends_on:
+      - api
+
+  api:
+    container_name: bitextrading
+    restart: unless-stopped
+    build: .
+    expose:
+      - "3000"
+      - "80"
+      - "443"
+      - "43554"
+    command: pm2-runtime start pm2.json --env production

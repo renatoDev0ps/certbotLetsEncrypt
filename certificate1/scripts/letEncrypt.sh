@@ -1,27 +1,27 @@
-sudo mkdir -p /docker/letsencrypt-docker-nginx/src/letsencrypt/letsencrypt-site
-sudo vim /docker/letsencrypt-docker-nginx/src/letsencrypt/docker-compose.yml
+sudo mkdir -p /docker/letsencrypt-certificate1-nginx/src/letsencrypt/letsencrypt-site
+sudo vim /docker/letsencrypt-certificate1-nginx/src/letsencrypt/docker-compose.yml
 
 usar composes/first/docker-compose.yml
 
-sudo vim /docker/letsencrypt-docker-nginx/src/letsencrypt/nginx.conf
+sudo vim /docker/letsencrypt-certificate1-nginx/src/letsencrypt/nginx.conf
 
 usar nginx/nginx.conf
 
-sudo vim /docker/letsencrypt-docker-nginx/src/letsencrypt/letsencrypt-site/index.html
+sudo vim /docker/letsencrypt-certificate1-nginx/src/letsencrypt/letsencrypt-site/index.html
 
 usar /index.html
 
-cd /docker/letsencrypt-docker-nginx/src/letsencrypt
+cd /docker/letsencrypt-certificate1-nginx/src/letsencrypt
 docker-compose up -d
 
 usar certbot/first.sh
 usar certbot/second.sh
 
-sudo rm -rf /docker-volumes/
+sudo rm -rf /docker-certificate1-volumes/ # LEMBRAR DE FAZER BACKUP ANTES DE APAGAR
 
 usar certbot/third.sh
 
-cd /docker/letsencrypt-docker-nginx/src/letsencrypt
+cd /docker/letsencrypt-certificate1-nginx/src/letsencrypt
 docker-compose down
 
 # ir para ~/
@@ -36,7 +36,7 @@ sudo vim DevOps/Nginx/production.conf
 
 usar nginx/production.conf ou production2.conf
 
-sudo openssl dhparam -out ~/DevOps/Nginx/dh-param/dhparam-2048.pem 2048
+sudo openssl dhparam -out dh-param_certificate1/dhparam-2048.pem 2048
 
 sudo vim DevOps/Nginx/production-site/index.html
 # copie seu projeto para dentro da pasta production-site

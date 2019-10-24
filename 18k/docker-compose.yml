@@ -1,0 +1,42 @@
+version: "3"
+services:
+  webserver:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: webserver
+    volumes:
+      - ./volumes/app:/app
+      - ./dh-param_certificate1/dhparam-2048.pem:/etc/ssl/certs/dhparam-2048.pem
+      - /docker-certificate1-volumes/etc/letsencrypt/live/app.18kworld.com/fullchain.pem:/etc/letsencrypt/live/app.18kworld.com/fullchain.pem
+      - /docker-certificate1-volumes/etc/letsencrypt/live/app.18kworld.com/privkey.pem:/etc/letsencrypt/live/app.18kworld.com/privkey.pem
+    depends_on:
+      - mysql
+    ports:
+      - 80:80
+      - 443:443
+
+  mysql:
+    image: mysql:5.7
+    container_name: mysql
+    volumes:
+      - ./volumes/mysql/data:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: urb4n5t1
+
+  redis:
+    image: redis:alpine
+    container_name: redis
+    volumes:
+      - ./volumes/redis/data:/data
+
+  app:
+    image: phpmyadmin/phpmyadmin:latest
+    container_name: phpmyadmin
+    depends_on:
+      - mysql
+    ports:
+      - 5050:80
+    environment:
+      PMA_HOST: mysql
+      MYSQL_ROOT_PASSWORD: urb4n5t1
