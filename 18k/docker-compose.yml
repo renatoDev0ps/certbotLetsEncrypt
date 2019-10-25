@@ -1,24 +1,35 @@
-version: "3"
+version: '3'
+
 services:
-  webserver:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    container_name: webserver
-    volumes:
-      - ./volumes/app:/app
-      - ./dh-param_certificate1/dhparam-2048.pem:/etc/ssl/certs/dhparam-2048.pem
-      - /docker-certificate1-volumes/etc/letsencrypt/live/app.18kworld.com/fullchain.pem:/etc/letsencrypt/live/app.18kworld.com/fullchain.pem
-      - /docker-certificate1-volumes/etc/letsencrypt/live/app.18kworld.com/privkey.pem:/etc/letsencrypt/live/app.18kworld.com/privkey.pem
-    depends_on:
-      - mysql
+  nginx:
+    image: nginx:alpine
+    container_name: nginx
+    restart: unless-stopped
+    tty: true
     ports:
       - 80:80
       - 443:443
+    volumes:
+      - ./volumes/app:/var/www/html
+      - ./dh-param_certificate1/dhparam-2048.pem:/etc/ssl/certs/dhparam-2048.pem
+      - /docker-certificate1-volumes/etc/letsencrypt/live/app.18kworld.com/fullchain.pem:/etc/letsencrypt/live/app.18kworld.com/fullchain.pem
+      - /docker-certificate1-volumes/etc/letsencrypt/live/app.18kworld.com/privkey.pem:/etc/letsencrypt/live/app.18kworld.com/privkey.pem
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: app
+    restart: unless-stopped
+    tty: true
+    working_dir: /var/www/html
+    volumes:
+      - ./volumes/app:/var/www/html
 
   mysql:
     image: mysql:5.7
     container_name: mysql
+    restart: unless-stopped
     volumes:
       - ./volumes/mysql/data:/var/lib/mysql
     environment:
@@ -27,12 +38,14 @@ services:
   redis:
     image: redis:alpine
     container_name: redis
+    restart: unless-stopped
     volumes:
       - ./volumes/redis/data:/data
 
-  app:
+  phpmyadmin:
     image: phpmyadmin/phpmyadmin:latest
     container_name: phpmyadmin
+    restart: unless-stopped
     depends_on:
       - mysql
     ports:
