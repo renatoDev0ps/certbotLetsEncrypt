@@ -6,7 +6,7 @@ sudo docker run -it --rm \
 -v "/docker-certificate2-volumes/var/log/letsencrypt:/var/log/letsencrypt" \
 certbot/certbot \
 certonly --webroot \
---email bitextradingssl@gmail.com --agree-tos --no-eff-email \
+--email devops@urbans.com.br --agree-tos --no-eff-email \
 --webroot-path=/data/letsencrypt \
--d admintest.bitextrading.com
+-d 18kworld.com -d www.18kworld.com -d app.18kworld.com
 # Modificar DNS para domínio desejado

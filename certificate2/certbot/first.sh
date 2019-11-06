@@ -9,5 +9,5 @@ certonly --webroot \
 --register-unsafely-without-email --agree-tos \
 --webroot-path=/data/letsencrypt \
 --staging \
--d admintest.bitextrading.com
+-d 18kworld.com -d www.18kworld.com -d app.18kworld.com
 # Modificar os DNS para domínio desejado
